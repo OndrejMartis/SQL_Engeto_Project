@@ -1,32 +1,4 @@
 
-SELECT o.product_id, o.customer_id, o.status, c.firstName, c.lastName 
-FROM orders AS o
-INNER JOIN customers AS c ON o.customer_id = c.id;
-
-SELECT o.product_id, o.customer_id, o.status, c.firstName, c.lastName
-FROM orders AS o
-LEFT JOIN customers AS c ON o.customer_id = c.id;
-
-SELECT o.product_id, o.customer_id, o.status, c.firstName, c.lastName
-FROM orders AS o
-RIGHT JOIN customers AS c ON o.customer_id = c.id;
-
-select Name, Population 
-from country c 
-order by Population desc
-limit 5;
-
-select GovernmentForm, count(GovernmentForm) as Počet,
-avg(LifeExpectancy) as "Průměrná délka života" 
-from country c 
-where LifeExpectancy > 78
-group by GovernmentForm ;
-
-select c.Name as Stát , c2.District as Kraj  
-from country as c
-join city as c2 on c.Code = c2.CountryCode 
-where c2.Name = 'Serravalle';
-
 create or replace view last_year_food_prices as
 select name, average_price 
 from food_prices_comparsion fpc
@@ -52,18 +24,29 @@ order by round(((power
 	
 
 
-create table ondramartis_test_table as;
-
 create view economies_czech_republic as
 select * 
 from economies e
-where country = 'Czech Republic'; 
+where country = 'Czech Republic'
+; -- pohled pro vyselektování České republiky pro použití informací o GDP do výsledné tabulky 
 
-create table ondramartis_test_table as;
-select * 
+
+create or replace table t_ondrej_martis_project_sql_primary_final as
+select 
+	cp.payroll_year as measured_year,
+	cpib.name as branch_name,
+	cp.value as average_payroll ,
+	cpc.name as food_category, 
+	cp2.value as food_price,
+	ecr.GDP as GDP
 from czechia_payroll cp 
-cross join czechia_price cp2
-cross join economies_czech_republic ecr 
+inner join czechia_price cp2 on cp.payroll_year = year(cp2.date_from)
+inner join economies_czech_republic ecr on cp.payroll_year = ecr.`year` 
 join czechia_payroll_industry_branch cpib on cp.industry_branch_code = cpib.code
 join czechia_price_category cpc on cpc.code = cp2.category_code 
-;
+; -- výsledná tabulka obsahující požadované informace 
+
+
+
+
+
