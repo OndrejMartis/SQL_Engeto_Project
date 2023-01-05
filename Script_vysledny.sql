@@ -1,4 +1,4 @@
--- příprava: vytvoření tabulky s daty a pohledy se kterými budu nadále pracovat
+-- příprava: vytvoření tabulek s daty a pohledy se kterými budu nadále pracovat
 
 create or replace table t_ondrej_martis_project_sql_primary_final as
 select
@@ -14,6 +14,13 @@ select `year`, country, GDP, 'GDP' as measured_type
 from economies e 
 where country = 'Czech Republic';
 ; -- příkaz, kterým vytvořím výslednou tabulku s potřebnými daty
+
+CREATE OR REPLACE TABLE t_ondrej_martis_project_SQL_secondary_final as
+SELECT e.country, e.`year`, e.GDP, e.gini, e.population 
+FROM economies e 
+JOIN countries c ON c.country = e.country 
+WHERE c.continent IN ('Europe') AND (`year` BETWEEN 2006 AND 2020) AND e.GDP IS NOT NULL AND e.gini IS NOT NULL
+ORDER BY country, `year` asc ; -- příkaz pro vytvoření druhé výsledné tabulky
 
 
 create or replace view food_prices_comparsion as
