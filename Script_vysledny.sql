@@ -22,7 +22,6 @@ JOIN countries c ON c.country = e.country
 WHERE c.continent IN ('Europe') AND (`year` BETWEEN 2006 AND 2020) AND e.GDP IS NOT NULL AND e.gini IS NOT NULL
 ORDER BY country, `year` asc ; -- příkaz pro vytvoření druhé výsledné tabulky
 
-
 create or replace view food_prices_comparsion as
 select 
 	name, 
@@ -100,20 +99,19 @@ jaký byl průměrný meziroční nárůst mezd dle odvětví */
 select 
 	fpc.name, 
 	fpc.measured_year, 
-	fpc.average_price, 
-	pc.average_payroll,
-	round((pc.average_payroll/fpc.average_price), 0) as can_buy_for_payroll
+	avg(fpc.average_price) AS average_price, 
+	round(avg(pc.average_payroll), 0) AS average_payroll,
+	round((avg(pc.average_payroll)/avg(fpc.average_price)), 0) as can_buy_for_payroll
 from food_prices_comparsion fpc 
 join payroll_comparsion pc on pc.measured_year = fpc.measured_year
 where (fpc.name like '%mléko%' or fpc.name like '%chleb%') and fpc.measured_year in (2006, 2018)
 group by fpc.name, fpc.measured_year
-order by measured_year; /* dotaz kterým vyberu požadované potraviny, první a poslední možný rok měření a spočítám kolik jednotek dané potraviny
+order by measured_year;/* dotaz kterým vyberu požadované potraviny, první a poslední možný rok měření a spočítám kolik jednotek dané potraviny
 je možné koupit za průměrnou mzdu v daném roce */
-
 
 -- odpověď 3:
 
-create or replace view average_prices_yearly_growth as
+create or replace view average_prices_yearly_growth AS
 select fyfp.name, 
 	round(((power
 	((lyfp.average_price/fyfp.average_price), 1/count(fpc.measured_year)  
@@ -136,14 +134,14 @@ limit 1; -- zde si už jednoduše zobrazím která z potravin zdražovala v prů
 
 -- odpověď 4:
 
-create or replace view payrolls_prices_yearly_growth as
-select 
+CREATE OR REPLACE VIEW payrolls_prices_yearly_growth AS
+SELECT 
 	fpc.measured_year, 
-	round(((pc.average_payroll_next_year - pc.average_payroll)/pc.average_payroll)*100, 1) as percentualni_rozdil_payrolls,
-	round(((fpc.average_price_next_year - fpc.average_price)/fpc.average_price)*100, 1) as percentualni_rozdil_food_prices
-from food_prices_comparsion fpc 
-join payroll_comparsion pc on pc.measured_year = fpc.measured_year
-group by fpc.measured_year; -- pohled zobrazující percentuální rozdíly cen potravin a mezd podle let
+	round(((pc.average_payroll_next_year - pc.average_payroll)/pc.average_payroll)*100, 1) AS percentualni_rozdil_payrolls,
+	round(((fpc.average_price_next_year - fpc.average_price)/fpc.average_price)*100, 1) AS percentualni_rozdil_food_prices
+FROM food_prices_comparsion fpc 
+JOIN payroll_comparsion pc ON pc.measured_year = fpc.measured_year
+GROUP BY fpc.measured_year; -- pohled zobrazující percentuální rozdíly cen potravin a mezd podle let
 
 select *, (percentualni_rozdil_food_prices - percentualni_rozdil_payrolls) as rozdil  
 from payrolls_prices_yearly_growth ppyg 
