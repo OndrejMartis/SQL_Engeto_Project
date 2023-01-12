@@ -1,6 +1,6 @@
 # SQL_Engeto_Project
 Ahoj, toto je můj první SQL projekt, zde k němu mám pár slov: <br/>
-**Ke správné funkci popsaných příkazů nezbytná původní databáze ENGETO**
+**Ke správné funkci popsaných příkazů je nezbytná původní databáze ENGETO**
 - V první části "příprava" jsou příkazy pro vytvoření výsledných tabulek a pohledů, které budu následně využívat k zodpovězení stanovených otázek. 
 - U každého příkazu je komentář vysvětlující co daný příkaz vykonává. 
 - Dále se již budu věnovat konkrétním otázkám. <br/>
