@@ -18,8 +18,7 @@ V sekci **odpověď 2** nalezneme dotaz, ve kterém vyberu požadované potravin
 
 ## Otázka 3 - Která kategorie potravin zdražuje nejpomaleji (je u ní nejnižší percentuální meziroční nárůst)?
 
-V sekci **odpoveď 3** nalezneme dva dotazy - první zobrazí všechny druhy potravin a meziroční nárůst/pokles ceny v procentech, pro snažší odpovězení 
-jsem z dotazu vytvořil pohled, který využiju v druhém dotazu, kde už pouze vyfiltruji jednu potravinu, která měla nejnižší nárůst ceny v průběhu let.
+V sekci **odpoveď 3** nalezneme dva dotazy - první zobrazí všechny druhy potravin a meziroční nárůst/pokles ceny v procentech, **zde vidíme, že Cukr krystalový a Rajská jablka červená kulatá dokonce v průběhu let zlevnili**, ale pro doslovné odpovězení jsem z dotazu vytvořil pohled, který využiju v druhém dotazu, kde už pouze vyfiltruji jednu potravinu, která měla nejnižší nárůst ceny v průběhu let.
 - Nejpomaleji zdražující potravinou byly banány žluté.
 
 ## Otázka 4 - Existuje rok, ve kterém byl meziroční nárůst cen potravin výrazně vyšší než růst mezd (větší než 10 %)?
